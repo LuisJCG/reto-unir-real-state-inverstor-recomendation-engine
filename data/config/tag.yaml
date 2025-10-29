@@ -1,0 +1,18 @@
+count: 80
+enums:
+  type:
+    values: [THEME, RISK, ESG, STRATEGY]
+    weights: [0.4, 0.2, 0.2, 0.2]
+names:
+  values:
+    - Core
+    - Value-Add
+    - Opportunistic
+    - Logistics
+    - Residential
+    - Green
+    - Urban
+    - Infra
+    - Office
+    - Mixed-Use
+random_seed: 42

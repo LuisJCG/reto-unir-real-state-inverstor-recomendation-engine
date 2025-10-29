@@ -1,0 +1,33 @@
+count: 200             
+defaults:
+  currency: EUR
+  horizon: mid           # short | mid | long
+  lat_range: [-90, 90]
+  lon_range: [-180, 180]
+  irr_est_range: [0.06, 0.22]
+  yield_est_range: [0.03, 0.12]
+  ltv_range: [0.30, 0.75]
+  risk_score_range: [0.10, 0.80]
+  esg_score_range: [0.20, 0.95]
+  min_ticket_range: [250000, 5000000]  
+enums:
+  asset_type:
+    values: [residential, office, retail, logistics, hospitality, mixed_use]
+    weights: [0.25, 0.15, 0.15, 0.25, 0.10, 0.10]
+  stage:
+    values: [development, value_add, core_plus, core, opportunistic]
+    weights: [0.20, 0.25, 0.25, 0.20, 0.10]
+  horizon:
+    values: [short, mid, long]
+    weights: [0.2, 0.6, 0.2]
+  currency:
+    values: [EUR, USD, GBP]
+    weights: [0.7, 0.2, 0.1]
+countries:
+  include: [ES, PT, FR, IT, DE, NL, UK, IE, PL, SE]
+names:
+  prefix: [“Alpha”, “Nova”, “Prime”, “Green”, “Sky”, “River”, “Atlas”, “Urban”]
+  suffix: [“Residences”, “Logistics Park”, “Tower”, “Plaza”, “District”, “Hub”, “Gardens”]
+free_text:
+  sentences: 2           
+random_seed: 42 

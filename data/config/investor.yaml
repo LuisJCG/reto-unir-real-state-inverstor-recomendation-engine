@@ -1,0 +1,18 @@
+count: 100
+defaults:
+  ticket_min_range: [100000, 1000000]
+  ticket_max_range: [2000000, 20000000]
+  esg_pref_range: [0.0, 1.0]
+enums:
+  segment:
+    values: [retail, hnwi, family_office, institutional]
+    weights: [0.3, 0.2, 0.2, 0.3]
+  risk_profile:
+    values: [low, medium, high]
+    weights: [0.4, 0.4, 0.2]
+  horizon:
+    values: [short, mid, long]
+    weights: [0.2, 0.6, 0.2]
+jurisdictions:
+  include: [ES, PT, FR, IT, DE, NL, UK, IE, US, SG]
+random_seed: 123

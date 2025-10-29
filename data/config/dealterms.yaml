@@ -1,0 +1,14 @@
+count: 60
+defaults:
+  preferred_return_pct_range: [0.06, 0.12]
+  management_fee_pct_range: [0.005, 0.02]
+  performance_fee_pct_range: [0.10, 0.25]
+  lockup_months_range: [12, 84]
+enums:
+  structure:
+    values: [closed_end_fund, spv, club_deal]
+    weights: [0.6, 0.25, 0.15]
+  distribution_policy:
+    values: [quarterly, semiannual, annual]
+    weights: [0.5, 0.3, 0.2]
+random_seed: 42

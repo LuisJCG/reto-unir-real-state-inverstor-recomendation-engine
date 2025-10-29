@@ -1,0 +1,14 @@
+{
+  "printWidth": 200,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "useTabs": false,
+  "arrowParens": "avoid",
+  "jsxBracketSameLine": false,
+  "overrides": [
+     {
+        "files": "*.java",
+        "options": { "tabWidth": 4}
+     }
+  ]
+}

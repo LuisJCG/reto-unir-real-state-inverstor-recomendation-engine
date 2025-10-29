@@ -1,0 +1,77 @@
+services:
+  backend:
+    image: ghcr.io/jportoc/reto-unir-dataset:backend-1.0.0 # 
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      QUARKUS_NEO4J_URI: bolt://neo4j:7687
+      QUARKUS_NEO4J_AUTHENTICATION_USERNAME: ${NEO4J_USER}
+      QUARKUS_NEO4J_AUTHENTICATION_PASSWORD: ${NEO4J_PASSWORD}
+      QUARKUS_NEO4J_ENCRYPTED: "false"
+    depends_on:
+      neo4j:
+        condition: service_healthy
+
+  neo4j:
+    image: neo4j:5.20.0-community
+    container_name: gw-neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      # Credenciales
+      NEO4J_AUTH: "${NEO4J_USER}/${NEO4J_PASSWORD}"
+      NEO4J_server_memory_pagecache_size: "2G"
+      NEO4J_server_memory_heap_initial__size: "2G"
+      NEO4J_server_memory_heap_max__size: "2G"
+
+      # Permisos para APOC/GDS
+      NEO4J_dbms_security_auth__enabled: "true"
+      NEO4J_dbms_security_procedures_unrestricted: "apoc.*,gds.*"
+      NEO4J_dbms_security_procedures_allowlist: "apoc.*,gds.*"
+
+
+      NEO4J_apoc_export_file_enabled: "true"
+      NEO4J_apoc_import_file_enabled: "true"
+      NEO4J_apoc_import_file_use__neo4j__config: "true"
+
+
+      NEO4J_PLUGINS: '["apoc","graph-data-science"]'
+
+    volumes:
+      - neo4j-data:/data
+      - neo4j-logs:/logs
+      - ./data:/import
+      - ./neo4j/seed:/seed
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -a bolt://localhost:7687 --encryption=false -u \"$NEO4J_USER\" -p \"$NEO4J_PASSWORD\" \"RETURN 1\" >/dev/null 2>&1"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 25s
+
+  py:
+    build:
+      context: ./py
+      dockerfile: Dockerfile
+    image: ${PY_IMAGE}
+    container_name: gw-py
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    working_dir: /app
+    environment:
+      NEO4J_BOLT: ${NEO4J_BOLT}
+      NEO4J_USER: ${NEO4J_USER}
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD}
+    volumes:
+      - ./py:/app
+      - ./data:/data
+      - ./neo4j/seed:/seed
+    restart: unless-stopped
+
+volumes:
+  neo4j-data:
+  neo4j-logs:

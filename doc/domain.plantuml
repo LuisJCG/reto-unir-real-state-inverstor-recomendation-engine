@@ -1,0 +1,114 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide circle
+
+' ===== Entidades =====
+class Investor {
+  +id: UUID
+  +segment: Segment
+  +risk_profile: RiskProfile
+  +horizon: Horizon
+  +ticket_min: decimal
+  +ticket_max: decimal
+  +jurisdictions_ok: string[]
+  +esg_pref: decimal (0..1)
+  +created_at: datetime
+}
+
+class InvestorMandate {
+  +id: UUID
+  +asset_types_allowed: AssetType[]
+  +stages_allowed: Stage[]
+  +geographies_allowed: string[]
+  +min_target_irr: decimal
+  +max_ltv: decimal (0..1)
+  +min_esg_score: decimal (0..1)
+  +ticket_min: decimal
+  +ticket_max: decimal
+  +effective_from: date
+  +effective_to: date
+}
+
+class Project {
+  +id: UUID
+  +name: string
+  +asset_type: AssetType
+  +stage: Stage
+  +city: string
+  +country: string
+  +lat: decimal
+  +lon: decimal
+  +irr_est: decimal
+  +yield_est: decimal
+  +ltv: decimal (0..1)
+  +risk_score: decimal (0..1)
+  +esg_score: decimal (0..1)
+  +min_ticket: decimal
+  +horizon: Horizon
+  +currency: Currency
+  +text_desc: text
+}
+
+class Sponsor {
+  +id: UUID
+  +name: string
+  +reputation_score: decimal (0..1)
+  +track_record_irr_avg: decimal
+  +deals_count: int
+  +focus_geos: string[]
+  +focus_asset_types: AssetType[]
+}
+
+class DealTerms {
+  +id: UUID
+  +structure: Structure
+  +preferred_return_pct: decimal
+  +management_fee_pct: decimal
+  +performance_fee_pct: decimal
+  +lockup_months: int
+  +distribution_policy: string <<quarterly/semiannual/annual>>
+}
+
+class Market {
+  +id: string <<city-country or code>>
+  +city: string
+  +country: string
+  +vacancy_rate: decimal
+  +rent_growth: decimal
+  +cap_rate_market: decimal
+}
+
+class PortfolioPosition {
+  +id: UUID
+  +committed_amount: decimal
+  +entry_date: date
+  +exit_date: date
+  +status: PositionStatus
+  +currency: Currency
+}
+
+class UserInteraction {
+  +id: UUID
+  +type: InteractionType
+  +ts: datetime
+  +weight: decimal
+}
+
+class Tag {
+  +id: UUID
+  +name: string
+  +type: TagType
+}
+
+' ===== Relaciones =====
+Investor "1" -- "0..*" InvestorMandate : HAS_MANDATE >
+Investor "1" -- "0..*" PortfolioPosition : HELD >
+PortfolioPosition "1" -- "1" Project : IN >
+Investor "1" -- "0..*" UserInteraction : INTERACTED >
+UserInteraction "1" -- "1" Project : ON >
+Project "1" -- "1" Sponsor : SPONSORED_BY >
+Project "1" -- "0..1" DealTerms : HAS_TERMS >
+Project "1" -- "1" Market : LOCATED_IN >
+Project "1" -- "0..*" Tag : HAS_TAG >
+Investor "1" -- "0..*" Tag : PREFERS >

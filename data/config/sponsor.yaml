@@ -1,0 +1,10 @@
+count: 60
+defaults:
+  reputation_score_range: [0.40, 0.95]
+  track_record_irr_avg_range: [0.07, 0.22]
+  deals_count_range: [5, 150]
+geographies:
+  values: [ES, FR, DE, IT, UK, NL, PT, SE, PL, IE]
+asset_types:
+  values: [residential, office, retail, logistics, hospitality, mixed_use]
+random_seed: 42

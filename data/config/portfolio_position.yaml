@@ -1,0 +1,11 @@
+count: 120
+defaults:
+  committed_amount_range: [250000, 10000000]
+enums:
+  status:
+    values: [OPEN, CLOSED, PENDING]
+    weights: [0.55, 0.35, 0.10]
+  currency:
+    values: [EUR, USD, GBP]
+    weights: [0.7, 0.2, 0.1]
+random_seed: 42

@@ -1,0 +1,18 @@
+count: 80
+defaults:
+  min_target_irr_range: [0.06, 0.20]
+  max_ltv_range: [0.40, 0.75]
+  min_esg_score_range: [0.20, 0.90]
+  ticket_min_range: [250000, 5000000]
+  ticket_max_factor: [1.5, 4.0]
+  effective_window_years: 3
+enums:
+  asset_type:
+    values: [residential, office, retail, logistics, hospitality, mixed_use]
+    weights: [0.25, 0.15, 0.15, 0.25, 0.10, 0.10]
+  stage:
+    values: [development, value_add, core_plus, core, opportunistic]
+    weights: [0.20, 0.25, 0.25, 0.20, 0.10]
+geographies:
+  values: [ES, PT, FR, IT, DE, NL, UK, IE, PL, SE]
+random_seed: 42

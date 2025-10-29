@@ -1,0 +1,6 @@
+count: 200
+enums:
+  type:
+    values: [VIEW, LIKE, BOOKMARK, DISMISS]
+    weights: [0.65, 0.15, 0.15, 0.05]
+random_seed: 42

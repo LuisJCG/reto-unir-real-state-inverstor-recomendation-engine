@@ -1,0 +1,6 @@
+count: 100
+defaults:
+  vacancy_rate_range: [0.02, 0.20]
+  rent_growth_range: [-0.03, 0.10]
+  cap_rate_market_range: [0.03, 0.08]
+random_seed: 42
